@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Name=Browser Selector
+GenericName=Web Browser Selector
+Comment=Select which browser to use when opening URLs
+Exec=/home/megatux/.local/bin/browser-selector.sh %U
+Icon=web-browser
+Terminal=true
+Type=Application
+Categories=Network;WebBrowser;System;
+MimeType=x-scheme-handler/http;x-scheme-handler/https;x-scheme-handler/ftp;text/html;application/xhtml+xml;
+StartupNotify=false
+NoDisplay=false
