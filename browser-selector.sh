@@ -8,8 +8,16 @@
 get_browsers() {
   local browsers_found=()
   
-  # Search in both system and user application directories
-  for dir in "/usr/share/applications" "$HOME/.local/share/applications"; do
+  # Search in system, user, and Flatpak application directories
+  local search_dirs=(
+    "/usr/share/applications"
+    "/usr/local/share/applications"
+    "$HOME/.local/share/applications"
+    "/var/lib/flatpak/exports/share/applications"
+    "$HOME/.local/share/flatpak/exports/share/applications"
+  )
+  
+  for dir in "${search_dirs[@]}"; do
     if [[ -d "$dir" ]]; then
       while IFS= read -r -d '' desktop_file; do
         # Skip our own desktop file to avoid infinite loops
@@ -25,7 +33,7 @@ get_browsers() {
             browsers_found+=("$name|$desktop_file")
           fi
         fi
-      done < <(find "$dir" -maxdepth 1 -name "*.desktop" -type f -print0 2>/dev/null)
+      done < <(find "$dir" -maxdepth 1 -name "*.desktop" -print0 2>/dev/null)
     fi
   done
   
